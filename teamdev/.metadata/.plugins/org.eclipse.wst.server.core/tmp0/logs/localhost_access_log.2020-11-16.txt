@@ -1,0 +1,7 @@
+0:0:0:0:0:0:0:1 - - [16/Nov/2020:00:46:36 +0900] "POST /CustomerManage/LoginServlet HTTP/1.1" 200 419
+127.0.0.1 - - [16/Nov/2020:23:57:46 +0900] "GET / HTTP/1.1" 404 898
+0:0:0:0:0:0:0:1 - - [16/Nov/2020:23:57:48 +0900] "GET /CustomerManage/LoginServlet HTTP/1.1" 200 827
+0:0:0:0:0:0:0:1 - - [16/Nov/2020:23:57:48 +0900] "GET /CustomerManage/style.css HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [16/Nov/2020:23:58:05 +0900] "POST /CustomerManage/LoginServlet HTTP/1.1" 200 1112
+0:0:0:0:0:0:0:1 - - [16/Nov/2020:23:58:14 +0900] "POST /CustomerManage/UserServlet HTTP/1.1" 200 2246
+0:0:0:0:0:0:0:1 - - [16/Nov/2020:23:58:26 +0900] "POST /CustomerManage/UserServlet HTTP/1.1" 200 4703

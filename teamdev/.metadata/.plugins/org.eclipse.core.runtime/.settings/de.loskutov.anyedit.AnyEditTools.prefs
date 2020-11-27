@@ -1,0 +1,5 @@
+disallowedInPath=\ \r\n"'*?><|\=(){};&$,%@
+eclipse.preferences.version=1
+org.eclipse.jdt.ui.editor.tab.width=4
+saveAndConvert=true
+useModulo4Tabs=true

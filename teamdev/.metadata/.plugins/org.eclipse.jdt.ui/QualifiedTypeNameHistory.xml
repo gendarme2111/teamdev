@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="java.sql.Statement"/>
+<fullyQualifiedTypeName name="customerdb.User"/>
+<fullyQualifiedTypeName name="user.User"/>
+<fullyQualifiedTypeName name="customer.Customer"/>
+<fullyQualifiedTypeName name="customer.Message"/>
+<fullyQualifiedTypeName name="controller.CustomerCsvServlet"/>
+<fullyQualifiedTypeName name="user.UserListBean"/>
+<fullyQualifiedTypeName name="customer.CustomerLogic"/>
+<fullyQualifiedTypeName name="java.lang.NumberFormatException"/>
+<fullyQualifiedTypeName name="java.util.function.Function"/>
+<fullyQualifiedTypeName name="dao.CustomerDaoWithTransaction"/>
+<fullyQualifiedTypeName name="util.LogUtil"/>
+<fullyQualifiedTypeName name="java.lang.Integer"/>
+<fullyQualifiedTypeName name="java.io.FileNotFoundException"/>
+<fullyQualifiedTypeName name="util.StringUtil"/>
+<fullyQualifiedTypeName name="constants.MessageConstants"/>
+<fullyQualifiedTypeName name="java.lang.Override"/>
+<fullyQualifiedTypeName name="com.mysql.cj.protocol.x.SyncFlushDeflaterOutputStream"/>
+</qualifiedTypeNameHistroy>

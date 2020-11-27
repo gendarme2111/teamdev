@@ -1,0 +1,288 @@
+package dao;
+
+import static constants.MessageConstants.*;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import com.mysql.cj.protocol.x.SyncFlushDeflaterOutputStream;
+
+import customer.CustomerBean;
+import util.LogUtil;
+
+/**
+ * 顧客管理DAO(オートコミット)
+ *
+ */
+public class CustomerDao extends BaseDao {
+
+    /**
+     * 顧客情報テーブルから全顧客の情報を取得する
+     * @return 顧客情報Beanのリスト
+     */
+    public ArrayList<CustomerBean> loadAll() {
+        LogUtil.println(this.getClass().getSimpleName() + "#loadAll");
+
+        PreparedStatement pstmt = null;
+        ArrayList<CustomerBean> alCustomer = new ArrayList<CustomerBean>();
+        String strSql = "SELECT * FROM CUSTOMER ORDER BY id ASC";
+
+        try {
+            open();
+            pstmt = conn.prepareStatement(strSql);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                CustomerBean customer = new CustomerBean();
+                customer.setId(rs.getInt("id"));
+                customer.setZip(rs.getString("zip"));
+                customer.setName(rs.getString("name"));
+                customer.setAddress1(rs.getString("address1"));
+                customer.setAddress2(rs.getString("address2"));
+                customer.setTel(rs.getString("tel"));
+                customer.setFax(rs.getString("fax"));
+                customer.setEmail(rs.getString("email"));
+                alCustomer.add(customer);
+            }
+            rs.close();
+
+        } catch (ClassNotFoundException | SQLException e) {
+            LogUtil.printStackTrace(e);
+        } finally {
+            try {
+                pstmt.close();
+                close();
+            } catch (SQLException e) {
+                LogUtil.printStackTrace(e);
+            }
+        }
+
+        return alCustomer;
+    }
+
+    /**
+     * 顧客情報テーブルから氏名と検索キーワードが一致する顧客の情報を取得する
+     * @param name 顧客情報テーブルを氏名で部分一致検索するためのキーワード
+     * @return 顧客情報Beanのリスト
+     */
+    public ArrayList<CustomerBean> searchByName(String name) {
+        LogUtil.println(this.getClass().getSimpleName() + "#searchByName");
+
+        PreparedStatement pstmt = null;
+        ArrayList<CustomerBean> alCustomer = new ArrayList<CustomerBean>();;
+        alCustomer.clear();
+        String strSql = "SELECT * FROM CUSTOMER WHERE name LIKE ? ORDER BY id ASC";
+
+        try {
+            open();
+            pstmt = conn.prepareStatement(strSql);
+            pstmt.setString(1, "%" + name + "%");
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                CustomerBean customer = new CustomerBean();
+                customer.setId(rs.getInt("id"));
+                customer.setZip(rs.getString("zip"));
+                customer.setName(rs.getString("name"));
+                customer.setAddress1(rs.getString("address1"));
+                customer.setAddress2(rs.getString("address2"));
+                alCustomer.add(customer);
+                System.out.println("while文");
+            }
+            rs.close();
+            System.out.println("rs.close");
+        } catch (ClassNotFoundException | SQLException e) {
+            LogUtil.printStackTrace(e);
+            System.out.println("catch");
+        } finally {
+            try {
+                pstmt.close();
+                close();
+                System.out.println("finalytry");
+            } catch (SQLException e) {
+                LogUtil.printStackTrace(e);
+                System.out.println("finallycatch");
+            }
+        }
+
+        return alCustomer;
+    }
+
+    /**
+     * IDを指定して顧客情報テーブルから顧客情報を取得する
+     * @param id 顧客情報テーブルのID
+     * @return 顧客情報Bean
+     */
+    public CustomerBean load(int id) {
+        LogUtil.println(this.getClass().getSimpleName() + "#load");
+
+        PreparedStatement pstmt = null;
+        String strSql = "SELECT * FROM CUSTOMER WHERE id =?";
+        CustomerBean customer = null;
+
+        try {
+            open();
+            pstmt = conn.prepareStatement(strSql);
+            pstmt.setInt(1, id);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                customer = new CustomerBean();
+                customer.setId(rs.getInt("id"));
+                customer.setName(rs.getString("name"));
+                customer.setZip(rs.getString("zip"));
+                customer.setAddress1(rs.getString("address1"));
+                customer.setAddress2(rs.getString("address2"));
+                customer.setTel(rs.getString("tel"));
+                customer.setFax(rs.getString("fax"));
+                customer.setEmail(rs.getString("email"));
+                rs.close();
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            LogUtil.printStackTrace(e);
+        } finally {
+            try {
+                pstmt.close();
+                close();
+            } catch (SQLException e) {
+                LogUtil.printStackTrace(e);
+            }
+        }
+
+        return customer;
+    }
+
+    /**
+     * 顧客情報テーブルへ指定の顧客情報を追加する。
+     * @param customer 顧客情報Bean
+     * @return エラーメッセージ(処理成功時、null)
+     */
+    public String add(CustomerBean customer) {
+        LogUtil.println(this.getClass().getSimpleName() + "#add");
+
+        // TODO 未実装
+        String errMessage=null;
+        PreparedStatement pstmt=null;
+        String strsql="INSERT INTO CUSTOMER(name,zip,address1,address2,tel,fax,email)" //INSERT文の準備
+                +"VALUES(?,?,?,?,?,?,?)"; //IDをシーケンスでインクリメント
+
+            try{ //INSERT文中の「？」に該当する値を入れてSQL文を完成させる
+                open();
+                pstmt=conn.prepareStatement(strsql);
+                pstmt.setString(1,customer.getName());
+                pstmt.setString(2,customer.getZip());
+                pstmt.setString(3,customer.getAddress1());
+                pstmt.setString(4,customer.getAddress2());
+                pstmt.setString(5,customer.getTel());
+                pstmt.setString(6,customer.getFax());
+                pstmt.setString(7,customer.getEmail());
+                pstmt.executeUpdate();
+            }catch(ClassNotFoundException | SQLException e){
+                errMessage=e.getMessage();
+                LogUtil.printStackTrace(e);
+            }finally{
+                try{
+                pstmt.close();
+                close();
+            }catch(SQLException e){
+                errMessage=e.getMessage();
+                LogUtil.printStackTrace(e);
+                }
+            }
+        return errMessage;
+    }
+
+    /**
+     * 顧客情報テーブルの指定の顧客情報を更新する
+     * @param cutomer 顧客情報Bean
+     * @return エラーメッセージ(処理成功時、null)
+     */
+    public String update(CustomerBean customer) {
+        LogUtil.println(this.getClass().getSimpleName() + "#update");
+
+        // TODO 未実装
+        String errMessage=null; //処理成功時、null
+        PreparedStatement pstmt=null; //SQLを送信する
+
+        try{
+            open();
+            String strsql=null;
+
+            //UPDATE文を準備
+            strsql="UPDATE CUSTOMER set name=?,zip=?,address1=?,address2=?,tel=?,fax=?,email=? where id=?";
+            pstmt=conn.prepareStatement(strsql);
+
+            //UPDATE文中の「？」に該当する値を順に格納する
+            pstmt.setString(1,customer.getName());
+            pstmt.setString(2,customer.getZip());
+            pstmt.setString(3,customer.getAddress1());
+            pstmt.setString(4,customer.getAddress2());
+            pstmt.setString(5,customer.getTel());
+            pstmt.setString(6,customer.getFax());
+            pstmt.setString(7,customer.getEmail());
+            pstmt.setInt(8,customer.getId());
+
+            //UPDATE文を実行（intResultには更新された行数が代入される）
+            int intResult=pstmt.executeUpdate();
+            if(intResult!=1){
+            //エラーメッセージを呼び出す
+            errMessage=MESSAGE_CAN_NOT_UPDATE;
+            }
+        }catch(SQLException | ClassNotFoundException e){
+            errMessage=e.getMessage();
+            LogUtil.printStackTrace(e);
+            }finally{
+                try{
+                    pstmt.close();
+                    close();
+                }catch(SQLException e){
+                    errMessage=e.getMessage();
+                    LogUtil.printStackTrace(e);
+                }
+            }
+        return errMessage;
+    }
+
+    /**
+     * IDを指定して顧客情報テーブルから顧客情報を削除する
+     * @param id 顧客情報テーブルのID
+     * @return エラーメッセージ(処理成功時、null)
+     */
+    public String delete(int id) {
+        LogUtil.println(this.getClass().getSimpleName() + "#delete");
+
+        // TODO 未実装
+        String errMessage=null;
+        PreparedStatement pstmt=null;
+
+        //nullを入れて登録情報を削除(DELETE文に変更する可能性有)
+        String strsql=
+                "UPDATE CUSTOMER set name=null,zip=null,address1=null,address2=null,tel=null,fax=null,email=null where id=?";
+
+        try{
+            open();
+            pstmt=conn.prepareStatement(strsql);
+            pstmt.setInt(1,id); //UPDATE文の？にidを入れる
+
+            //UPDATE文を実行(intResultには変更された行数が代入される)
+            int intResult=pstmt.executeUpdate();
+            if(intResult!=1){
+                //エラーメッセージを呼び出す
+                errMessage=MESSAGE_CAN_NOT_DELETE;
+            }
+        }catch(SQLException | ClassNotFoundException e){
+            errMessage=e.getMessage();
+            LogUtil.printStackTrace(e);
+        }finally{
+            try{
+                pstmt.close();
+                close();
+            }catch(SQLException e){
+                errMessage=e.getMessage();
+                LogUtil.printStackTrace(e);
+            }
+        }
+        return errMessage;
+    }
+}

@@ -1,0 +1,3 @@
+eclipse.preferences.version=1
+module-start-timeout=300000
+runtimes=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\r\n<runtimes>\r\n  <runtime id\="C-_pleiades_tomcat_8" id-set\="true" location\="C\:/pleiades/tomcat/8" name\="Tomcat8.5" runtime-type-id\="org.eclipse.jst.server.tomcat.runtime.85" timestamp\="1" vm-install-id\="1604975146304" vm-install-type-id\="org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType"/>\r\n  <runtime id\="C-_xampp_tomcat" id-set\="true" location\="C\:/xampp/tomcat" name\="tomcat" runtime-type-id\="org.eclipse.jst.server.tomcat.runtime.70" timestamp\="0" vm-install-id\="1605365321324" vm-install-type-id\="org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType"/>\r\n</runtimes>\r\n

@@ -1,0 +1,33 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="customerdb.*"%>
+<jsp:useBean class="customerdb.User" id="user" scope="session"/>
+<jsp:useBean class="customerdb.CustomerCsv" id="csv" scope="session"/>
+<%
+request.setCharacterEncoding("UTF-8");
+String strFilePath = request.getParameter("read");
+CustomerCsv customerCsv = new CustomerCsv();
+customerCsv.read(strFilePath);
+%>
+<!doctype html>
+<html>
+<head><title>顧客管理(cvs)</title>
+<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+<h1>顧客管理</h1>
+<div class="main">
+<h2>CSV操作</h2>
+<form action="read.jsp" method="post">
+<p>
+<input type="submit" value="CSVファイル読み込み"> <input type="file" name="read" size="50">
+</p>
+</form>
+<p>
+<a href="write_csv.jsp">CSVファイル書き込み</a> <input type="file" name="write" size="50">
+</p>
+<p>
+<a href="../login/top.jsp">トップ画面</a>
+</p>
+</div>
+</body>
+</html>

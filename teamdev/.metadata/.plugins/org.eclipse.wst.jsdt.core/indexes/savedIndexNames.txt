@@ -1,0 +1,11 @@
+INDEX VERSION 1.4+C:\pleiades-2018-09-java-win-64bit_20181004\pleiades\workspace_luna_ƒXƒPƒ‹ƒgƒ“_1114\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+1425619239.index
+1739815413.index
+4146582441.index
+551839670.index
+2716765849.index
+4156748519.index
+83270738.index
+3200625102.index
+2152517639.index
+2788987054.index

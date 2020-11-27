@@ -1,0 +1,32 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="customerdb.*"%>
+<jsp:useBean class="customerdb.User" id="user" scope="session"/>
+<jsp:useBean class="customerdb.CustomerCsv" id="csv" scope="session"/>
+<%
+if(user.getName()==null){
+	response.sendRedirect("../login/session_timeout.jsp");
+	return;
+}
+request.setCharacterEncoding("UTF-8");
+String strFilePath = request.getParameter("read");
+CustomerCsv customerCsv = new CustomerCsv();
+customerCsv.read(strFilePath);
+%>
+<%
+
+
+customer.delete();
+%>
+<!doctype html>
+<html>
+<head><title>顧客管理(csv)</title>
+<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+<h1>住所録</h1>
+<div class="main">
+<h2>削除しました。</h2>
+<a href="search.jsp">検索画面</a>
+</div>
+</body>
+</html>
